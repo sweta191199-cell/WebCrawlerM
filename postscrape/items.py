@@ -28,9 +28,10 @@ class Boldorg(scrapy.Item):
     title = scrapy.Field()
     content = scrapy.Field()
     links = scrapy.Field()
+    amount = scrapy.Field()
+    deadline = scrapy.Field()
+
+
   
-class women(scrapy.Item):
-    title = scrapy.Field()
-    content = scrapy.Field()
-    links = scrapy.Field()
+
 

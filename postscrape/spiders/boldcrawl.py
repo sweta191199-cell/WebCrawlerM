@@ -1,5 +1,5 @@
 import scrapy
-from ..items import women
+from ..items import Boldorg
 
 class Crawler(scrapy.Spider):
     name="spider"
@@ -9,19 +9,23 @@ class Crawler(scrapy.Spider):
 
     def parse(self, response):
 
-       edu = women()
+       edu = Boldorg()
         
-       all_div_schemes = response.css('div.innercontent')
+       all_div_schemes = response.css('.innercontent')
 
        for spider in all_div_schemes:
-            title = spider.css("h3 a::text").extract()
-            content = spider.css("ul li::text").extract()
-            links = spider.css("h3 a").xpath("@href").extract()
+            title = spider.css(".innercontent h3 a::text").extract()
+            content = spider.css(".innercontent li~ li+ li::text").extract()
+            links = spider.css(".innercontent h3 a").xpath("@href").extract()
+            deadline = spider.css(".innercontent li:nth-child(1)::text").extract()
+            amount = spider.css(".innercontent li:nth-child(2)::text").extract()
             
 
             edu['title'] = title
             edu['content'] = content
             edu['links'] = links
+            edu['amount'] = amount
+            edu['deadline'] = deadline
 
             yield edu
 
